@@ -1,18 +1,21 @@
-﻿public enum CardType
+﻿namespace Assets.Scripts
 {
-    Zero,
-    One,
-    Two,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Wild,
-    WildDrawFour,
-    DrawTwo,
-    Skip,
-    Reverse
+    public enum CardType
+    {
+        Zero,
+        One,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Wild,
+        WildDrawFour,
+        DrawTwo,
+        Skip,
+        Reverse
+    }
 }
