@@ -9,9 +9,17 @@ public class Card
 
     public Card(CardType card, Color color)
     {
-        iD = new Guid();
+        iD = Guid.NewGuid();
         cardType = card;
         colorType = color;
+    }
+
+    public Guid ID
+    {
+        get
+        {
+            return iD;
+        }
     }
 
     public CardType CardType
