@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Assets.Scripts.Types;
 
 public class Card
@@ -38,4 +38,3 @@ public class Card
         }
     }
 }
-
