@@ -1,35 +1,40 @@
-﻿using System;
+using System;
 using Assets.Scripts.Types;
 
-namespace Assets.Scripts
+public class Card
 {
-    public class Card
+    private Guid iD;
+    private CardType cardType;
+    private Color colorType;
+
+    public Card(CardType card, Color color)
     {
-        private Guid iD;
-        private CardType cardType;
-        private Color colorType;
+        iD = Guid.NewGuid();
+        cardType = card;
+        colorType = color;
+    }
 
-        public Card(CardType card, Color color)
+    public Guid ID
+    {
+        get
         {
-            iD = new Guid();
-            cardType = card;
-            colorType = color;
+            return iD;
         }
+    }
 
-        public CardType CardType
+    public CardType CardType
+    {
+        get
         {
-            get
-            {
-                return cardType;
-            }
+            return cardType;
         }
-
-        public Color Color
+    }
+     
+    public Color Color
+    {
+        get
         {
-            get
-            {
-                return colorType;
-            }
+            return colorType;
         }
     }
 }
