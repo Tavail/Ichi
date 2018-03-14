@@ -41,7 +41,10 @@ namespace Assets.Scripts
             }
         }
 
-        public bool HasIchi
+        public bool HasIchi()
+        {
+            return cardsInHand.Count() == 1;
+        }
 
     }
 }
