@@ -4,46 +4,49 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace Assets.Scripts
 {
-    private Guid id;
-    private string name;
-    private int wins;
-    private List<Card> cardsInHand;
-
-    public Player(string playerName)
+    public class Player : MonoBehaviour
     {
-        id = Guid.NewGuid();
-        name = playerName;
-    }
+        private Guid id;
+        private string name;
+        private int wins;
+        private List<Card> cardsInHand;
 
-    public List<Card> GetCardsInHand()
-    {
-        return cardsInHand;
-    }
-
-    public void AddCardToHand(Card card)
-    {
-        cardsInHand.Add(card);
-    }
-
-    public void RemoveCardFromHand(Card card)
-    {
-        Card cardToRemove = cardsInHand.FirstOrDefault(x => x.ID == card.ID);
-
-        if (cardToRemove != null)
+        public Player(string playerName)
         {
-            cardsInHand.Remove(cardToRemove);
+            id = Guid.NewGuid();
+            name = playerName;
         }
-        else
+
+        public List<Card> GetCardsInHand()
         {
-            throw new Exception("Couldn't remove card from hand. Doesn't exist in hand.");
+            return cardsInHand;
         }
-    }
 
-    public bool HasIchi()
-    {
-        return cardsInHand.Count() == 1;
-    }
+        public void AddCardToHand(Card card)
+        {
+            cardsInHand.Add(card);
+        }
 
+        public void RemoveCardFromHand(Card card)
+        {
+            Card cardToRemove = cardsInHand.FirstOrDefault(x => x.ID == card.ID);
+
+            if (cardToRemove != null)
+            {
+                cardsInHand.Remove(cardToRemove);
+            }
+            else
+            {
+                throw new Exception("Couldn't remove card from hand. Doesn't exist in hand.");
+            }
+        }
+
+        public bool HasIchi()
+        {
+            return cardsInHand.Count() == 1;
+        }
+
+    }
 }
