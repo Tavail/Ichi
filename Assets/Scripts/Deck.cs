@@ -42,9 +42,9 @@ namespace Assets.Scripts
             cardDic.Add(CardType.Reverse, 2);
 
             List<Color> colors = Enum.GetValues(typeof(Color)).Cast<Color>().ToList();
-            
+
             // Loop through each color
-            foreach(Color color in colors)
+            foreach (Color color in colors)
             {
                 // If its the wild color, set up the wilds.
                 if (color == Color.None)
@@ -55,7 +55,7 @@ namespace Assets.Scripts
                     wildCards.Add(CardType.WildDrawFour);
 
                     // Loop through the wild card typs.
-                    foreach(CardType wildCard in wildCards)
+                    foreach (CardType wildCard in wildCards)
                     {
                         // Each wild card gets four copies of itself.
                         for (int i = 4; i > 0; i--)
@@ -67,7 +67,7 @@ namespace Assets.Scripts
                             DeckCards.Add(tempCard);
                         }
                     }
-                    
+
                 }
                 // If it isn't the wild color, set up other colors.
                 else
@@ -85,10 +85,24 @@ namespace Assets.Scripts
                             DeckCards.Add(tempCard);
                         }
                     }
-                } 
+                }
             }
         }
 
         // Add Shuffle Method here.
+        public static void shuffleDeck<Card>(this IList<Card> DeckCards)
+        {
+            Random rng = new Random();
+            int n = DeckCards.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                Card value = DeckCards[k];
+                DeckCards[k] = DeckCards[k];
+                DeckCards[n] = value;
+            }
+
+        }
     }
 }
