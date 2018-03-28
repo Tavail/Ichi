@@ -90,7 +90,7 @@ namespace Assets.Scripts
         }
 
         // Add Shuffle Method here.
-        public static void shuffleDeck<Card>(this IList<Card> DeckCards)
+        public void shuffleDeck<Card>(this IList<Card> DeckCards)
         {
             Random rng = new Random();
             int n = DeckCards.Count;
