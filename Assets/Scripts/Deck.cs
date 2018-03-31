@@ -90,19 +90,19 @@ namespace Assets.Scripts
         }
 
         // Add Shuffle Method here.
-        public static void shuffleDeck<Card>(this IList<Card> DeckCards)
-        {
-            Random rng = new Random();
-            int n = DeckCards.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                Card value = DeckCards[k];
-                DeckCards[k] = DeckCards[k];
-                DeckCards[n] = value;
-            }
+        //public void shuffleDeck<Card>(this IList<Card> DeckCards)
+        //{
+        //    Random rng = new Random();
+        //    int n = DeckCards.Count;
+        //    while (n > 1)
+        //    {
+        //        n--;
+        //        int k = rng.Next(n + 1);
+        //        Card value = DeckCards[k];
+        //        DeckCards[k] = DeckCards[k];
+        //        DeckCards[n] = value;
+        //    }
 
-        }
+        //}
     }
 }
