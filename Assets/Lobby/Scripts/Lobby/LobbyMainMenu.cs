@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Lobby
 {
     //Main menu, mainly only a bunch of callback called by the UI (setup throught the Inspector)
-    public class LobbyMainMenu : MonoBehaviour 
+    public class LobbyMainMenu : MonoBehaviour
     {
         public LobbyManager lobbyManager;
 
@@ -18,11 +19,11 @@ namespace Assets.Lobby
         {
             lobbyManager.topPanel.ToggleVisibility(true);
 
-            ipInput.onEndEdit.RemoveAllListeners();
-            ipInput.onEndEdit.AddListener(onEndEditIP);
+           // ipInput.onEndEdit.RemoveAllListeners();
+           // ipInput.onEndEdit.AddListener(onEndEditIP);
 
-            matchNameInput.onEndEdit.RemoveAllListeners();
-            matchNameInput.onEndEdit.AddListener(onEndEditGameName);
+            //matchNameInput.onEndEdit.RemoveAllListeners();
+            //matchNameInput.onEndEdit.AddListener(onEndEditGameName);
         }
 
         public void OnClickHost()
@@ -32,15 +33,15 @@ namespace Assets.Lobby
 
         public void OnClickJoin()
         {
-            lobbyManager.ChangeTo(lobbyPanel);
-
-            lobbyManager.networkAddress = ipInput.text;
-            lobbyManager.StartClient();
-
-            lobbyManager.backDelegate = lobbyManager.StopClientClbk;
-            lobbyManager.DisplayIsConnecting();
-
-            lobbyManager.SetServerInfo("Connecting...", lobbyManager.networkAddress);
+        //    lobbyManager.ChangeTo(lobbyPanel);
+        //
+        //    lobbyManager.networkAddress = ipInput.text;
+        //    lobbyManager.StartClient();
+        //
+        //    lobbyManager.backDelegate = lobbyManager.StopClientClbk;
+        //    lobbyManager.DisplayIsConnecting();
+        //
+        //    lobbyManager.SetServerInfo("Connecting...", lobbyManager.networkAddress);
         }
 
         public void OnClickDedicated()
@@ -55,19 +56,19 @@ namespace Assets.Lobby
 
         public void OnClickCreateMatchmakingGame()
         {
-            lobbyManager.StartMatchMaker();
-            lobbyManager.matchMaker.CreateMatch(
-                matchNameInput.text,
-                (uint)lobbyManager.maxPlayers,
-                true,
-				"", "", "", 0, 0,
-				lobbyManager.OnMatchCreate);
-
-            lobbyManager.backDelegate = lobbyManager.StopHost;
-            lobbyManager._isMatchmaking = true;
-            lobbyManager.DisplayIsConnecting();
-
-            lobbyManager.SetServerInfo("Matchmaker Host", lobbyManager.matchHost);
+        //    lobbyManager.StartMatchMaker();
+        //    lobbyManager.matchMaker.CreateMatch(
+        //        matchNameInput.text,
+        //        (uint)lobbyManager.maxPlayers,
+        //        true,
+		//		"", "", "", 0, 0,
+		//		lobbyManager.OnMatchCreate);
+        //
+        //    lobbyManager.backDelegate = lobbyManager.StopHost;
+        //    lobbyManager._isMatchmaking = true;
+        //    lobbyManager.DisplayIsConnecting();
+        //
+        //    lobbyManager.SetServerInfo("Matchmaker Host", lobbyManager.matchHost);
         }
 
         public void OnClickOpenServerList()
@@ -75,6 +76,12 @@ namespace Assets.Lobby
             lobbyManager.StartMatchMaker();
             lobbyManager.backDelegate = lobbyManager.SimpleBackClbk;
             lobbyManager.ChangeTo(lobbyServerList);
+        }
+
+        public void onClickMainMenu(GameObject gameObject)
+        {
+            SceneManager.LoadScene("MainMenu");
+            Destroy(gameObject);
         }
 
         void onEndEditIP(string text)
