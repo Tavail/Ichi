@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking.Match;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+using Assets.Lobby.Scripts.Lobby;
+using System.Linq;
 
 namespace Assets.Lobby
 {
     public class LobbyServerList : MonoBehaviour
     {
         public LobbyManager lobbyManager;
+        public LobbyNetworkDiscovery lobbyDiscovery;
+        public List<LanConnectionInfo> lanConnections;
 
         public RectTransform serverListRect;
         public GameObject serverEntryPrefab;
@@ -31,17 +36,58 @@ namespace Assets.Lobby
             RequestPage(0);
         }
 
-		public void OnGUIMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches)
+        private void Update()
+        {
+            lobbyDiscovery.StartCoroutine("CleanUpExpired");
+            if (lanConnections == null || lanConnections.Count != lobbyDiscovery.lanConnections.Keys.ToList().Count)
+            {
+                RequestPage(currentPage);
+            }
+
+            lanConnections = lobbyDiscovery.lanConnections.Keys.ToList();
+        }
+
+        public void OnGUIMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches)
 		{
-			if (matches.Count == 0)
-			{
+			//if (matches.Count == 0)
+			//{
+   //             if (currentPage == 0)
+   //             {
+   //                 noServerFound.SetActive(true);
+   //             }
+
+   //             currentPage = previousPage;
+               
+   //             return;
+   //         }
+
+   //         noServerFound.SetActive(false);
+   //         foreach (Transform t in serverListRect)
+   //             Destroy(t.gameObject);
+
+			//for (int i = 0; i < matches.Count; ++i)
+			//{
+   //             GameObject o = Instantiate(serverEntryPrefab) as GameObject;
+
+			//	o.GetComponent<LobbyServerEntry>().Populate(matches[i], lobbyManager, (i % 2 == 0) ? OddServerColor : EvenServerColor);
+
+			//	o.transform.SetParent(serverListRect, false);
+   //         }
+        }
+
+        public void OnGuiLobbyList(List<LanConnectionInfo> results)
+        {
+            if (results == null || results.Count <= 0)
+            {
                 if (currentPage == 0)
                 {
                     noServerFound.SetActive(true);
+                    foreach (Transform t in serverListRect)
+                        Destroy(t.gameObject);
                 }
 
                 currentPage = previousPage;
-               
+
                 return;
             }
 
@@ -49,14 +95,15 @@ namespace Assets.Lobby
             foreach (Transform t in serverListRect)
                 Destroy(t.gameObject);
 
-			for (int i = 0; i < matches.Count; ++i)
-			{
+            for (int i = 0; i < results.Count; ++i)
+            {
                 GameObject o = Instantiate(serverEntryPrefab) as GameObject;
 
-				o.GetComponent<LobbyServerEntry>().Populate(matches[i], lobbyManager, (i % 2 == 0) ? OddServerColor : EvenServerColor);
+                o.GetComponent<LobbyServerEntry>().Populate(results[i].FromAddress, lobbyManager, (i % 2 == 0) ? OddServerColor : EvenServerColor);
 
-				o.transform.SetParent(serverListRect, false);
+                o.transform.SetParent(serverListRect, false);
             }
+
         }
 
         public void ChangePage(int dir)
@@ -74,7 +121,8 @@ namespace Assets.Lobby
         {
             previousPage = currentPage;
             currentPage = page;
-			lobbyManager.matchMaker.ListMatches(page, 6, "", true, 0, 0, OnGUIMatchList);
-		}
+			//lobbyManager.matchMaker.ListMatches(page, 6, "", true, 0, 0, OnGUIMatchList); //For online match making.
+            OnGuiLobbyList(lobbyDiscovery.lanConnections.Keys.ToList());
+        }
     }
 }
