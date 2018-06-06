@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.Networking.Match;
 using UnityEngine.Networking.Types;
+using Assets.Lobby.Scripts.Lobby;
+using UnityEngine.Networking;
 
 namespace Assets.Lobby
 {
@@ -25,6 +27,17 @@ namespace Assets.Lobby
             GetComponent<Image>().color = c;
         }
 
+        public void Populate(string serverAddress, LobbyManager lobbyManager, Color c)
+        {
+            serverInfoText.text = "Local";
+            slotInfo.text = "10";
+
+            joinButton.onClick.RemoveAllListeners();
+            joinButton.onClick.AddListener(() => { JoinMatch(serverAddress, lobbyManager); });
+
+            GetComponent<Image>().color = c;
+        }
+
         void JoinMatch(NetworkID networkID, LobbyManager lobbyManager)
         {
 			lobbyManager.matchMaker.JoinMatch(networkID, "", "", "", 0, 0, lobbyManager.OnMatchJoined);
@@ -32,5 +45,16 @@ namespace Assets.Lobby
             lobbyManager._isMatchmaking = true;
             lobbyManager.DisplayIsConnecting();
         }
+
+        private void JoinMatch(string serverAddress, LobbyManager lobbyManager)
+        {
+            lobbyManager.networkAddress = serverAddress;
+            lobbyManager.StartClient();
+            lobbyManager.backDelegate = lobbyManager.StopClientClbk;
+            lobbyManager.DisplayIsConnecting();
+
+            //lobbyManager.SetServerInfo("Connecting...", lobbyManager.networkAddress);
+        }
+
     }
 }

@@ -46,12 +46,12 @@ namespace Assets.Lobby
 
         public void OnClickDedicated()
         {
-            lobbyManager.ChangeTo(null);
-            lobbyManager.StartServer();
+            //lobbyManager.ChangeTo(null);
+            //lobbyManager.StartServer();
 
-            lobbyManager.backDelegate = lobbyManager.StopServerClbk;
+            //lobbyManager.backDelegate = lobbyManager.StopServerClbk;
 
-            lobbyManager.SetServerInfo("Dedicated Server", lobbyManager.networkAddress);
+            //lobbyManager.SetServerInfo("Dedicated Server", lobbyManager.networkAddress);
         }
 
         public void OnClickCreateMatchmakingGame()
